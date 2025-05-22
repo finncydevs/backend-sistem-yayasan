@@ -9,6 +9,14 @@ const PegawaiModel = {
     db.query("SELECT * FROM pegawai WHERE id = ?", [id], callback);
   },
 
+  uploadFoto: (id, filename, callback) => {
+    db.query(
+      "UPDATE pegawai SET photo = ? WHERE id = ?",
+      [filename, id],
+      callback
+    );
+  },
+
   create: (data, callback) => {
     const sql = `
       INSERT INTO pegawai (
@@ -40,7 +48,7 @@ const PegawaiModel = {
       data.kabupaten,
       data.provinsi,
       data.kode_pos,
-      data.photo,
+      data.photo ?? null, // Jika photo tidak dikirim, set null
       data.status,
     ];
 
@@ -80,7 +88,7 @@ const PegawaiModel = {
       data.kabupaten,
       data.provinsi,
       data.kode_pos,
-      data.photo,
+      data.photo ?? null,
       data.status,
       id,
     ];
