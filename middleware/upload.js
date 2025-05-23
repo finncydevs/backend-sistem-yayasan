@@ -2,17 +2,30 @@
 const multer = require("multer");
 const path = require("path");
 
-const storage = multer.diskStorage({
-  destination: "uploads/",
-  filename: (req, file, cb) => {
-    if (!req.params.id) {
-      return cb(new Error("ID pegawai tidak ditemukan"), null);
-    }
-    const ext = path.extname(file.originalname);
-    cb(null, `${req.params.id}${ext}`); // Rename file: 5.png / 7.jpg
-  },
-});
+const upload = ({ folder = "uploads", filenameBuilder }) => {
+  const storage = multer.diskStorage({
+    destination: folder,
+    filename: (req, file, cb) => {
+      if (!filenameBuilder || typeof filenameBuilder !== "function") {
+        return cb(new Error("Filename builder not provided or invalid"), null);
+      }
 
-const upload = multer({ storage });
+      try {
+        const ext = path.extname(file.originalname);
+        const filename = filenameBuilder(req, ext);
+
+        if (!filename) {
+          return cb(new Error("Filename could not be generated"), null);
+        }
+
+        cb(null, filename);
+      } catch (err) {
+        cb(err, null);
+      }
+    },
+  });
+
+  return multer({ storage });
+};
 
 module.exports = upload;

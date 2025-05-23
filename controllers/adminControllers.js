@@ -62,6 +62,8 @@ const loginAdmin = async (req, res) => {
     console.log("Password hash DB:", admin.password);
 
     const isMatch = await bcrypt.compare(password, admin.password);
+    console.log("isMatch result:", isMatch);
+
     if (!isMatch) return res.status(401).json({ error: "Invalid credentials" });
     console.log(password, admin.password);
     const token = generateToken(admin.id);
