@@ -62,7 +62,7 @@ const LembagaModel = {
   update: (id, data, callback) => {
     const sql = `
       UPDATE profil_lembaga SET
-        nama_lembaga = ?,
+        nama = ?,
         npyn = ?,
         thn_berdiri = ?,
         luas = ?,
