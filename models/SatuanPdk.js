@@ -19,13 +19,13 @@ const TapelModel = {
 
   update: (id, data, callback) => {
     db.query(
-      "UPDATE satuan_pendidikan SET nama = ?, ket = ? WHERE id = ?",
+      "UPDATE satuan_pendidikan SET nama = ? WHERE id = ?",
       [data.nama, id],
       callback
     );
   },
   delete: (id, callback) => {
-    db.query("DELETE FROM satuan_pdk WHERE id = ?", [id], callback);
+    db.query("DELETE FROM satuan_pendidikan WHERE id = ?", [id], callback);
   },
 };
 
