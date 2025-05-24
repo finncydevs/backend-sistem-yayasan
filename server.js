@@ -11,6 +11,7 @@ const app = express();
 
 app.use(cors());
 app.use(express.json()); // ⚠️ MUST come before routes
+app.use("/uploads", express.static("uploads"));
 
 app.use("/api/admin", require("./routes/adminRoutes"));
 app.use("/api/tapel", require("./routes/tapelRoutes"));

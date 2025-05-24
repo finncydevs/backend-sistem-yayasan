@@ -19,13 +19,8 @@ const uploadPegawai = upload({
   },
 });
 
+router.post("/upload/:id", uploadPegawai.single("foto"), uploadFotoPegawai);
 
-router.post("/upload/:id", uploadPegawai.single("foto"), (req, res) => {
-  res.json({
-    message: "Foto pegawai berhasil diupload",
-    filename: req.file.filename,
-  });
-});
 router.get("/", getPegawais);
 router.post("/", createPegawai);
 router.get("/:id", getPegawaiById);

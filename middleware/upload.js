@@ -1,8 +1,11 @@
 // middlewares/upload.js
 const multer = require("multer");
 const path = require("path");
-
+const fs = require("fs");
 const upload = ({ folder = "uploads", filenameBuilder }) => {
+  if (!fs.existsSync(folder)) {
+    fs.mkdirSync(folder, { recursive: true });
+  }
   const storage = multer.diskStorage({
     destination: folder,
     filename: (req, file, cb) => {
