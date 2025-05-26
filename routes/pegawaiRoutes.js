@@ -8,6 +8,8 @@ const {
   updatePegawai,
   deletePegawai,
   uploadFotoPegawai,
+  getPegawaiAktif,
+  getPegawaiTidakAktif,
 } = require("../controllers/pegawaiControllers");
 const upload = require("../middleware/upload");
 
@@ -18,6 +20,8 @@ const uploadPegawai = upload({
     return `${req.params.id}${ext}`;
   },
 });
+router.get("/aktif", getPegawaiAktif);
+router.get("/tidak-aktif", getPegawaiTidakAktif);
 
 router.post("/upload/:id", uploadPegawai.single("foto"), uploadFotoPegawai);
 

@@ -97,6 +97,19 @@ console.log("Filename:", filename);
     });
   });
 };
+const getPegawaiAktif = (req, res) => {
+  Pegawai.getPegawaiAktif((err, results) => {
+    if (err) return res.status(500).json({ error: err.message });
+    res.json(results);
+  });
+};
+
+const getPegawaiTidakAktif = (req, res) => {
+  Pegawai.getPegawaiTidakAktif((err, results) => {
+    if (err) return res.status(500).json({ error: err.message });
+    res.json(results);
+  });
+};
 
 module.exports = {
   getPegawais,
@@ -105,4 +118,6 @@ module.exports = {
   updatePegawai,
   deletePegawai,
   uploadFotoPegawai,
+  getPegawaiAktif,
+  getPegawaiTidakAktif,
 };

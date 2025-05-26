@@ -1,3 +1,4 @@
+const { get } = require("mongoose");
 const db = require("../connections/dbConn.js");
 
 const PegawaiModel = {
@@ -18,7 +19,12 @@ const PegawaiModel = {
     console.log("filename", filename);
     console.log("id", id);
   },
-
+  getPegawaiAktif: (callback) => {
+    db.query("SELECT * FROM pegawai WHERE status = 1", callback);
+  },
+  getPegawaiTidakAktif: (callback) => {
+    db.query("SELECT * FROM pegawai WHERE status = 0", callback);
+  },
   create: (data, callback) => {
     const sql = `
       INSERT INTO pegawai (
