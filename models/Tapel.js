@@ -11,16 +11,16 @@ const TapelModel = {
 
   create: (data, callback) => {
     db.query(
-      "INSERT INTO tapel (tapel, ket) VALUES (?, ?)",
-      [data.tapel, data.ket],
+      "INSERT INTO tapel (tapel, ket, status) VALUES (?, ?, ?)",
+      [data.tapel, data.ket, data.statis],
       callback
     );
   },
 
   update: (id, data, callback) => {
     db.query(
-      "UPDATE tapel SET tapel = ?, ket = ? WHERE id = ?",
-      [data.tapel, data.ket, id],
+      "UPDATE tapel SET tapel = ?, ket = ?, ket = ? WHERE id = ?",
+      [data.tapel, data.ket, data.status, id],
       callback
     );
   },
