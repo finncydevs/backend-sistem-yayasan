@@ -1,55 +1,78 @@
-const Tapel = require('../models/Tapel.js'); 
+const Tapel = require("../models/Tapel.js");
 
-const createTapel = async (req, res) => { 
-    const { tapel, ket } = req.body;
-    
-    if (!tapel || !ket) {
-        return res.status(400).json({ error: 'Tahun ajaran and ket are required' });
-    }
-    
-    try {
-        Tapel.create({ tapel, ket }, (err, result) => {
-        if (err) return res.status(500).json({ error: err.message });
-    
-        res.status(201).json({ id: result.insertId, tapel, ket });
-        });
-    } catch (error) {
-        res.status(500).json({ error: 'Server error' });
-    }
-}
+const createTapel = async (req, res) => {
+  const { tapel, ket } = req.body;
 
-const getAllTapel = async (req, res) => {
-    try {
-        Tapel.getAll((err, results) => {
-            if (err) return res.status(500).json({ error: err.message });
-            res.json(results);
-        });
-    } catch (error) {
-        res.status(500).json({ error: 'Server error' });
-    }
+  if (!tapel || !ket) {
+    return res.status(400).json({ error: "Tahun ajaran and ket are required" });
+  }
+
+  try {
+    Tapel.create({ tapel, ket }, (err, result) => {
+      if (err) return res.status(500).json({ error: err.message });
+
+      res.status(201).json({ id: result.insertId, tapel, ket });
+    });
+  } catch (error) {
+    res.status(500).json({ error: "Server error" });
+  }
 };
 
+const getAllTapel = async (req, res) => {
+  try {
+    Tapel.getAll((err, results) => {
+      if (err) return res.status(500).json({ error: err.message });
+      res.json(results);
+    });
+  } catch (error) {
+    res.status(500).json({ error: "Server error" });
+  }
+};
+
+const getById = async (req, res) => {
+  const { id } = req.params;
+
+  if (!id || isNaN(id)) {
+    return res.status(400).json({ error: "Invalid ID format" });
+  }
+
+  try {
+    Tapel.getById(id, (err, result) => {
+      if (err) return res.status(500).json({ error: err.message });
+      if (!result || result.length === 0) {
+        return res.status(404).json({ message: "Tahun ajaran not found" });
+      }
+      res.json(result[0]);
+    });
+  } catch (error) {
+    res.status(500).json({ error: "Server error" });
+  }
+};
+
+
 const updateTapel = async (req, res) => {
-    const { id } = req.params;
-    const { tapel, ket } = req.body;
+  const { id } = req.params;
+  const { tapel, ket } = req.body;
 
-    if (!tapel || !ket) {
-        return res.status(400).json({ error: 'Tahun ajaran and ket are required' });
-    }
+  if (!tapel || !ket) {
+    return res.status(400).json({ error: "Tahun ajaran and ket are required" });
+  }
 
-    try {
-        Tapel.update(id, { tapel, ket }, (err, result) => {
-            if (err) return res.status(500).json({ error: err.message });
-            if (result.affectedRows === 0) return res.status(404).json({ message: 'Tahun ajaran not found' });
-            res.json({ id, tapel, ket });
-        });
-    } catch (error) {
-        res.status(500).json({ error: 'Server error' });
-    }
+  try {
+    Tapel.update(id, { tapel, ket }, (err, result) => {
+      if (err) return res.status(500).json({ error: err.message });
+      if (result.affectedRows === 0)
+        return res.status(404).json({ message: "Tahun ajaran not found" });
+      res.json({ id, tapel, ket });
+    });
+  } catch (error) {
+    res.status(500).json({ error: "Server error" });
+  }
 };
 
 module.exports = {
-    createTapel,
-    getAllTapel,
-    updateTapel,
-}
+  createTapel,
+  getAllTapel,
+  updateTapel,
+  getById,
+};

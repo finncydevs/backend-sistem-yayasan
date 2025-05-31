@@ -1,6 +1,6 @@
 const db = require("../connections/dbConn");
 
-const TapelModel = {
+const Tapel = {
   getAll: (callback) => {
     db.query("SELECT * FROM tapel", callback);
   },
@@ -12,18 +12,18 @@ const TapelModel = {
   create: (data, callback) => {
     db.query(
       "INSERT INTO tapel (tapel, ket, status) VALUES (?, ?, ?)",
-      [data.tapel, data.ket, data.statis],
+      [data.tapel, data.ket, data.status],
       callback
     );
   },
 
   update: (id, data, callback) => {
     db.query(
-      "UPDATE tapel SET tapel = ?, ket = ?, ket = ? WHERE id = ?",
+      "UPDATE tapel SET tapel = ?, ket = ?, ket = ?, status = ? WHERE id = ?",
       [data.tapel, data.ket, data.status, id],
       callback
     );
   },
 };
 
-module.exports = TapelModel;
+module.exports = Tapel;
