@@ -1,6 +1,6 @@
 const db = require("../connections/dbConn");
 
-const TapelModel = {
+const SPKModel = {
   getAll: (callback) => {
     db.query("SELECT * FROM satuan_pendidikan", callback);
   },
@@ -29,4 +29,4 @@ const TapelModel = {
   },
 };
 
-module.exports = TapelModel;
+module.exports = SPKModel;

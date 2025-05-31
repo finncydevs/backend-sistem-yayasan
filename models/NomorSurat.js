@@ -8,6 +8,9 @@ const NomorSurat = {
   getById: (id, callback) => {
     db.query("SELECT * FROM nomor_surat WHERE id = ?", [id], callback);
   },
+  getBytTapel: (id_tapel, callback) => {
+    db.query("SELECT  tapel.tapel FROM nomor_surat INNER JOIN tapel on nomor_surat.id_tapel", [id_tapel], callback);
+  },
 
   create: (data, callback) => {
     const sql = `

@@ -6,9 +6,11 @@ const {
   createNomorSurat,
   updateNomorSurat,
   deleteNomorSurat,
+  getNomorSuratByTapel,
 } = require("../controllers/nomorSuratControllers");
 
 router.get("/", getNomorSurats);
+router.get("/tapel/:id_tapel", getNomorSuratByTapel);
 router.get("/:id", getNomorSuratById);
 router.post("/", createNomorSurat);
 router.put("/:id", updateNomorSurat);
