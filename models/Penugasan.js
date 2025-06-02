@@ -25,7 +25,14 @@ const Penugasan = {
         p.*,
         t.tapel AS tahun_pelajaran,
         ns.no_surat AS nomor_surat,
+        ns.nama_pimpinan AS nama_pimpinan,
+        ns.tgl_sp AS tgl_sp,
+        ns.tmt AS tmt,
         pg.nama AS nama_pegawai,
+        pg.tmp_lahir AS tmp_lahir,
+        pg.tgl_lahir AS tgl_lahir,
+        pg.jenjang_pendidikan AS jenjang_pendidikan,
+        pg.jabatan AS jabatan,
         sp.nama AS nama_satuan_pendidikan
       FROM penugasan p
       LEFT JOIN tapel t ON p.id_tapel = t.id

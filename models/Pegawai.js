@@ -28,14 +28,16 @@ const PegawaiModel = {
   create: (data, callback) => {
     const sql = `
       INSERT INTO pegawai (
-        nama, kewarganegaraan, nik, nuptk, nip, nipy, npwp, tmp_lahir, tgl_lahir,
+        nama, jenjang_pendidikan, jabatan, kewarganegaraan, nik, nuptk, nip, nipy, npwp, tmp_lahir, tgl_lahir,
         jk, agama, nama_ibu, status_pernikahan, nama_suami_istri, jml_anak,
         alamat, kecamatan, desa, kabupaten, provinsi, kode_pos, photo, status
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      ) VALUES (?, ?, ?, ?, ? ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     `;
 
     const params = [
       data.nama,
+      data.jenjang_pendidikan,
+      data.jabatan,
       data.kewarganegaraan,
       data.nik,
       data.nuptk,
@@ -66,7 +68,7 @@ const PegawaiModel = {
   update: (id, data, callback) => {
     const sql = `
       UPDATE pegawai SET
-        nama = ?, kewarganegaraan = ?, nik = ?, nuptk = ?, nip = ?, nipy = ?, npwp = ?, 
+        nama = ?,jenjang_pendidikan = ?, jabatan = ? kewarganegaraan = ?, nik = ?, nuptk = ?, nip = ?, nipy = ?, npwp = ?, 
         tmp_lahir = ?, tgl_lahir = ?, jk = ?, agama = ?, nama_ibu = ?, 
         status_pernikahan = ?, nama_suami_istri = ?, jml_anak = ?, alamat = ?, 
         kecamatan = ?, desa = ?, kabupaten = ?, provinsi = ?, kode_pos = ?, 
@@ -76,6 +78,8 @@ const PegawaiModel = {
 
     const params = [
       data.nama,
+      data.jenjang_pendidikan,
+      data.jabatan,
       data.kewarganegaraan,
       data.nik,
       data.nuptk,
