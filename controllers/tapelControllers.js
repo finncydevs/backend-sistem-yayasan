@@ -53,18 +53,18 @@ const getById = async (req, res) => {
 
 const updateTapel = async (req, res) => {
   const { id } = req.params;
-  const { tapel, ket } = req.body;
+  const { tapel, ket, status } = req.body;
 
   if (!tapel || !ket) {
     return res.status(400).json({ error: "Tahun ajaran and ket are required" });
   }
 
   try {
-    Tapel.update(id, { tapel, ket }, (err, result) => {
+    Tapel.update(id, { tapel, ket, status }, (err, result) => {
       if (err) return res.status(500).json({ error: err.message });
       if (result.affectedRows === 0)
         return res.status(404).json({ message: "Tahun ajaran not found" });
-      res.json({ id, tapel, ket });
+      res.json({ id, tapel, ket, status });
     });
   } catch (error) {
     res.status(500).json({ error: "Server error" });
