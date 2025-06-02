@@ -19,10 +19,13 @@ const Tapel = {
 
   update: (id, data, callback) => {
     db.query(
-      "UPDATE tapel SET tapel = ?, ket = ?, ket = ?, status = ? WHERE id = ?",
+      "UPDATE tapel SET tapel = ?, ket = ?, status = ? WHERE id = ?",
       [data.tapel, data.ket, data.status, id],
       callback
     );
+  },
+  delete: (id, callback) => {
+    db.query("DELETE FROM tapel WHERE id = ?", [id], callback);
   },
 };
 

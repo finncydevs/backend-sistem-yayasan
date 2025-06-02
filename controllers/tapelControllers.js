@@ -1,17 +1,18 @@
+const { stat } = require("fs");
 const Tapel = require("../models/Tapel.js");
 
 const createTapel = async (req, res) => {
-  const { tapel, ket } = req.body;
+  const { tapel, ket, status } = req.body;
 
   if (!tapel || !ket) {
     return res.status(400).json({ error: "Tahun ajaran and ket are required" });
   }
 
   try {
-    Tapel.create({ tapel, ket }, (err, result) => {
+    Tapel.create({ tapel, ket, status }, (err, result) => {
       if (err) return res.status(500).json({ error: err.message });
 
-      res.status(201).json({ id: result.insertId, tapel, ket });
+      res.status(201).json({ id: result.insertId, tapel, ket, status });
     });
   } catch (error) {
     res.status(500).json({ error: "Server error" });
@@ -70,9 +71,29 @@ const updateTapel = async (req, res) => {
   }
 };
 
+const deleteTapel = async (req, res) => {
+  const { id } = req.params;
+
+  if (!id || isNaN(id)) {
+    return res.status(400).json({ error: "Invalid ID format" });
+  }
+
+  try {
+    Tapel.delete(id, (err, result) => {
+      if (err) return res.status(500).json({ error: err.message });
+      if (result.affectedRows === 0)
+        return res.status(404).json({ message: "Tahun ajaran not found" });
+      res.json({ message: "Tahun ajaran deleted successfully" });
+    });
+  } catch (error) {
+    res.status(500).json({ error: "Server error" });
+  }
+}
+
 module.exports = {
   createTapel,
   getAllTapel,
   updateTapel,
   getById,
+    deleteTapel
 };
