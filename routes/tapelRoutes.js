@@ -5,9 +5,10 @@ const {
   createTapel,
   updateTapel,
   getById,
-  deleteTapel
-} = require('../controllers/tapelControllers');
-
+  deleteTapel,
+  getTapelAktif,
+} = require("../controllers/tapelControllers");
+router.get('/aktif', getTapelAktif);
 router.get('/', getAllTapel);
 router.post('/', createTapel);
 router.get('/:id', getById)

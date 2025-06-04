@@ -90,10 +90,19 @@ const deleteTapel = async (req, res) => {
   }
 }
 
+const getTapelAktif = (req, res) => {
+  Tapel.getByAktif((err, results) => {
+    if (err) return res.status(500).json({ error: err.message });
+    res.json(results);
+  });
+};
+
+
 module.exports = {
   createTapel,
   getAllTapel,
   updateTapel,
   getById,
-    deleteTapel
+    deleteTapel,
+  getTapelAktif
 };

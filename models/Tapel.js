@@ -1,3 +1,4 @@
+const { get } = require("mongoose");
 const db = require("../connections/dbConn");
 
 const Tapel = {
@@ -7,6 +8,10 @@ const Tapel = {
 
   getById: (id, callback) => {
     db.query("SELECT * FROM tapel WHERE id = ?", [id], callback);
+  },
+
+  getByAktif: (callback) => {
+    db.query("SELECT * FROM tapel WHERE status = 1", callback);
   },
 
   create: (data, callback) => {
