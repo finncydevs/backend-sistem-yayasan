@@ -8,6 +8,7 @@ const {
   deleteTapel,
   getTapelAktif,
 } = require("../controllers/tapelControllers");
+
 router.get('/aktif', getTapelAktif);
 router.get('/', getAllTapel);
 router.post('/', createTapel);
