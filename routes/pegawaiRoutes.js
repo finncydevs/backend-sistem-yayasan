@@ -20,6 +20,7 @@ const uploadPegawai = upload({
     return `${req.params.id}${ext}`;
   },
 });
+
 router.get("/aktif", getPegawaiAktif);
 router.get("/tidak-aktif", getPegawaiTidakAktif);
 

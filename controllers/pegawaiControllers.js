@@ -97,6 +97,8 @@ console.log("Filename:", filename);
     });
   });
 };
+
+
 const getPegawaiAktif = (req, res) => {
   Pegawai.getPegawaiAktif((err, results) => {
     if (err) return res.status(500).json({ error: err.message });

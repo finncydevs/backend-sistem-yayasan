@@ -19,6 +19,7 @@ const PegawaiModel = {
     console.log("filename", filename);
     console.log("id", id);
   },
+  
   getPegawaiAktif: (callback) => {
     db.query("SELECT * FROM pegawai WHERE status = 1", callback);
   },
