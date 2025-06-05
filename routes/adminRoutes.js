@@ -22,6 +22,7 @@ const uploadAdmin = upload({
 });
 
 
+
 router.post("/login", loginAdmin);
 router.post("/upload/:id", uploadAdmin.single("foto"), uploadFotoAdmin);
 router.get("/me", protect, getMe);

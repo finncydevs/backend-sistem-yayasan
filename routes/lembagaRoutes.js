@@ -7,17 +7,19 @@ const uploadLembaga = upload({
   folder: "uploads/lembaga",
   filenameBuilder: (req, ext) => {
     if (!req.params.id) throw new Error("ID lembaga tidak ditemukan");
-    return `logo_${req.params.id}${ext}`;
+    return `${req.params.id}${ext}`;
   },
 });
 
-router.post("/upload/:id", uploadLembaga.single("logo"), (req, res) => {
-  res.json({ message: "Logo berhasil diupload!" });
-});
+router.post(
+  "/upload/:id",
+  uploadLembaga.single("foto"),
+  lembagaController.uploadFotoLembaga
+);
 
 router.get("/", lembagaController.getLembagas);
-router.get("/:id", lembagaController.getLembagaById);
 router.post("/", lembagaController.createLembaga);
+router.get("/:id", lembagaController.getLembagaById);
 router.put("/:id", lembagaController.updateLembaga);
 
 module.exports = router;

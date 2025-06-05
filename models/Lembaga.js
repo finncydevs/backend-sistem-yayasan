@@ -113,6 +113,14 @@ const LembagaModel = {
   delete: (id, callback) => {
     db.query("DELETE FROM profil_lembaga WHERE id = ?", [id], callback);
   },
+
+  uploadFoto: (id, filename, callback) => {
+    db.query(
+      "UPDATE profil_lembaga SET logo = ? WHERE id = ?",
+      [filename, id],
+      callback
+    );
+  },
 };
 
 module.exports = LembagaModel;
