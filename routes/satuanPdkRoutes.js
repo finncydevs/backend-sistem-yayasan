@@ -9,10 +9,10 @@ const {
 } = require("../controllers/satuanPdkControllers");
 const { protect } = require("../middleware/auth");
 
-router.get("/",  protect, getSatuanPdks);
-router.get("/:id",  protect, getSatuanPdkById);
-router.post("/",  protect, createSatuanPdk);
-router.put("/:id", protect,  updateSatuanPdk);
-router.delete("/:id", protect,  deleteSatuanPdk);
+router.get("/", getSatuanPdks);
+router.get("/:id", getSatuanPdkById);
+router.post("/", createSatuanPdk);
+router.put("/:id", updateSatuanPdk);
+router.delete("/:id", deleteSatuanPdk);
 
 module.exports = router;

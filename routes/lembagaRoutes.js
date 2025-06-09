@@ -18,9 +18,9 @@ router.post(
   lembagaController.uploadFotoLembaga
 );
 
-router.get("/",protect, lembagaController.getLembagas);
-router.post("/",protect, lembagaController.createLembaga);
-router.get("/:id",protect, lembagaController.getLembagaById);
-router.put("/:id",protect, lembagaController.updateLembaga);
+router.get("/", lembagaController.getLembagas);
+router.post("/", lembagaController.createLembaga);
+router.get("/:id", lembagaController.getLembagaById);
+router.put("/:id", lembagaController.updateLembaga);
 
 module.exports = router;

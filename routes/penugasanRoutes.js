@@ -8,9 +8,9 @@ const {
 } = require("../controllers/penugasanControllers");
 const { protect } = require("../middleware/auth");
 
-route.get("/", protect, getPenugasans);
-route.post("/", protect, createPenugasan);
-route.get("/:id", protect, getPenugasanById);
-route.put("/:id", protect, updatePenugasan);
-route.delete("/:id", protect, deletePenugasan);
+route.get("/", getPenugasans);
+route.post("/", createPenugasan);
+route.get("/:id", getPenugasanById);
+route.put("/:id", updatePenugasan);
+route.delete("/:id", deletePenugasan);
 module.exports = route;
