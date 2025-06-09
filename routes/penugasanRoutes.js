@@ -6,10 +6,11 @@ const {
   updatePenugasan,
   deletePenugasan,
 } = require("../controllers/penugasanControllers");
+const { protect } = require("../middleware/auth");
 
-route.get("/", getPenugasans);
-route.post("/", createPenugasan);
-route.get("/:id", getPenugasanById);
-route.put("/:id", updatePenugasan);
-route.delete("/:id", deletePenugasan);
+route.get("/", protect, getPenugasans);
+route.post("/", protect, createPenugasan);
+route.get("/:id", protect, getPenugasanById);
+route.put("/:id", protect, updatePenugasan);
+route.delete("/:id", protect, deletePenugasan);
 module.exports = route;

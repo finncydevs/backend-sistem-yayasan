@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const lembagaController = require("../controllers/lembagaControllers");
 const upload = require("../middleware/upload");
+const { protect } = require("../middleware/auth");
 
 const uploadLembaga = upload({
   folder: "uploads/lembaga",
@@ -17,9 +18,9 @@ router.post(
   lembagaController.uploadFotoLembaga
 );
 
-router.get("/", lembagaController.getLembagas);
-router.post("/", lembagaController.createLembaga);
-router.get("/:id", lembagaController.getLembagaById);
-router.put("/:id", lembagaController.updateLembaga);
+router.get("/",protect, lembagaController.getLembagas);
+router.post("/",protect, lembagaController.createLembaga);
+router.get("/:id",protect, lembagaController.getLembagaById);
+router.put("/:id",protect, lembagaController.updateLembaga);
 
 module.exports = router;
