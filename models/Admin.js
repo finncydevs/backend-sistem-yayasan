@@ -44,6 +44,14 @@ const AdminModel = {
     );
   },
 
+  updatePassword: (id, newPassword, callback) => {
+    db.query(
+      "UPDATE admin SET password = ? WHERE id = ?",
+      [newPassword, id],
+      callback
+    )
+  },
+
   create: (data, callback) => {
     console.log("Creating admin with password:", data.password);
     db.query(

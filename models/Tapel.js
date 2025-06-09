@@ -10,7 +10,7 @@ const Tapel = {
     db.query("SELECT * FROM tapel WHERE id = ?", [id], callback);
   },
 
-  getByAktif: ( zcallback) => {
+  getByAktif: ( callback) => {
     db.query("SELECT * FROM tapel WHERE status = 1", callback);
   },
 

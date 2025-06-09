@@ -200,6 +200,45 @@
     res.json(req.admin);
   };
 
+  // Change password
+const changePassword = async (req, res) => {
+  const { oldPassword, newPassword } = req.body
+  const { id } = req.params
+
+  if (!oldPassword || !newPassword) {
+    return res.status(400).json({ error: "Old and new password are required" })
+  }
+
+  Admin.getById(id, async (err, results) => {
+    if (err) {
+      console.error(err)
+      return res.status(500).json({ error: "Internal server error" })
+    }
+
+    const admin = results[0]
+
+    if (!admin) {
+      return res.status(404).json({ error: "Admin not found" })
+    }
+
+    const isMatch = await bcrypt.compare(oldPassword, admin.password)
+    if (!isMatch) {
+      return res.status(401).json({ error: "Old password is incorrect" })
+    }
+
+    const hashedNewPassword = await bcrypt.hash(newPassword, 10)
+
+    Admin.updatePassword(id, hashedNewPassword, (err, result) => {
+      if (err) {
+        console.error(err)
+        return res.status(500).json({ error: "Failed to update password" })
+      }
+
+      res.json({ message: "Password updated successfully" })
+    })
+  })
+}
+
 
   module.exports = {
     getAdmins,
@@ -210,4 +249,5 @@
     getMe,
     uploadFotoAdmin,
     deleteAdmin,
+    changePassword
   };

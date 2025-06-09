@@ -8,7 +8,9 @@ const {
   loginAdmin,
   getMe,
   uploadFotoAdmin,
+  changePassword
 } = require("../controllers/adminControllers");
+
 
 const { protect } = require("../middleware/auth");
 const upload = require("../middleware/upload"); 
@@ -24,6 +26,8 @@ const uploadAdmin = upload({
 
 
 router.post("/login", loginAdmin);
+router.put("/change-password/:id", protect, changePassword);
+
 router.post("/upload/:id", uploadAdmin.single("foto"), uploadFotoAdmin);
 router.get("/me", protect, getMe);
 router.get("/", protect, getAdmins);
