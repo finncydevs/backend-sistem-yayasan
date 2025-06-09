@@ -1,27 +1,27 @@
-// models/Admin.js
-const db = require("../connections/dbConn.js"); 
+const db = require("../connections/dbConn.js");
 
 const AdminModel = {
   getAll: (callback) => {
-    db.query("SELECT * FROM admin", callback);
+    db.query("SELECT * FROM admin", (err, results) => {
+      if (err) return callback(err);
+      callback(null, results);
+    });
   },
 
   getById: (id, callback) => {
     db.query("SELECT * FROM admin WHERE id = ?", [id], (err, results) => {
-      if (err) return callback(err, null);
-      if (results.length === 0) return callback(null, null);
-      callback(null, results[0]); // return single admin object
+      if (err) return callback(err);
+      callback(null, results[0] || null); // Consistent null return for not found
     });
   },
 
   getByUsername: (username, callback) => {
     db.query(
-      "SELECT * FROM admin WHERE username = ?",
+      "SELECT id, username, email, password, photo FROM admin WHERE username = ?",
       [username],
       (err, results) => {
-        if (err) return callback(err, null);
-        if (results.length === 0) return callback(null, null);
-        callback(null, results[0]);
+        if (err) return callback(err);
+        callback(null, results[0] || null);
       }
     );
   },
@@ -32,8 +32,6 @@ const AdminModel = {
       [filename, id],
       callback
     );
-    console.log("filename", filename);
-    console.log("id", id);
   },
 
   update: (id, data, callback) => {
@@ -49,17 +47,16 @@ const AdminModel = {
       "UPDATE admin SET password = ? WHERE id = ?",
       [newPassword, id],
       callback
-    )
+    );
   },
 
   create: (data, callback) => {
-    console.log("Creating admin with password:", data.password);
     db.query(
-      "INSERT INTO admin (username, email, password, photo) VALUES (?,?, ?, ?)",
+      "INSERT INTO admin (username, email, password, photo) VALUES (?, ?, ?, ?)",
       [data.username, data.email, data.password, data.photo],
       callback
     );
   },
 };
 
-module.exports = AdminModel; 
+module.exports = AdminModel;
