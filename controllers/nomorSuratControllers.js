@@ -55,7 +55,7 @@ const updateNomorSurat = (req, res) => {
 const getNomorSuratByTapel = (req, res) => { 
   const { id_tapel } = req.params;
 
-  NomorSurat.getBytTapel(id_tapel, (err, results) => {
+  NomorSurat.getByTapel(id_tapel, (err, results) => {
     if (err) return res.status(500).json({ error: err.message });
     if (!results || results.length === 0) {
       return res.status(404).json({ message: "Nomor Surat tidak ditemukan untuk Tapel ini" });

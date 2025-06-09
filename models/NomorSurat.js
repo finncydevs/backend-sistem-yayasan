@@ -8,16 +8,27 @@ const NomorSurat = {
   getById: (id, callback) => {
     db.query("SELECT * FROM nomor_surat WHERE id = ?", [id], callback);
   },
+
   getBytTapel: (id_tapel, callback) => {
-    db.query("SELECT  tapel.tapel FROM nomor_surat INNER JOIN tapel on nomor_surat.id_tapel", [id_tapel], callback);
+    db.query(
+      "SELECT nomor_surat.*, tapel.tapel FROM nomor_surat INNER JOIN tapel ON nomor_surat.id_tapel = tapel.id WHERE nomor_surat.id_tapel = ?",
+      [id_tapel],
+      callback
+    );
   },
 
   create: (data, callback) => {
     const sql = `
-      INSERT INTO nomor_surat (id_tapel, nama_pimpinan, tgl_sp, tmt)
-      VALUES (?, ?, ?, ?)
+      INSERT INTO nomor_surat (id_tapel, no_surat, nama_pimpinan, tgl_sp, tmt)
+      VALUES (?, ?, ?, ?, ?)
     `;
-    const params = [data.id_tapel, data.nama_pimpinan, data.tgl_sp, data.tmt];
+    const params = [
+      data.id_tapel,
+      data.no_surat,
+      data.nama_pimpinan,
+      data.tgl_sp,
+      data.tmt,
+    ];
     db.query(sql, params, callback);
   },
 
@@ -25,6 +36,7 @@ const NomorSurat = {
     const sql = `
       UPDATE nomor_surat SET
         id_tapel = ?,
+        no_surat = ?,
         nama_pimpinan = ?,
         tgl_sp = ?,
         tmt = ?
@@ -32,6 +44,7 @@ const NomorSurat = {
     `;
     const params = [
       data.id_tapel,
+      data.no_surat,
       data.nama_pimpinan,
       data.tgl_sp,
       data.tmt,
