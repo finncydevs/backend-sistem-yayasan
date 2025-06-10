@@ -114,6 +114,14 @@ const LembagaModel = {
     db.query("DELETE FROM profil_lembaga WHERE id = ?", [id], callback);
   },
 
+  getLogo: (callback) => {
+    db.query("SELECT logo FROM profil_lembaga ", (err, results) => {
+      if (err) return callback(err);
+      if (results.length === 0) return callback(new Error("Lembaga not found"));
+      callback(null, results[0].logo);
+    });
+  },
+
   uploadFoto: (id, filename, callback) => {
     db.query(
       "UPDATE profil_lembaga SET logo = ? WHERE id = ?",

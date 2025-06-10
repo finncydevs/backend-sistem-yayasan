@@ -10,11 +10,11 @@ const {
 } = require("../controllers/nomorSuratControllers");
 const { protect } = require("../middleware/auth");
 
-router.get("/", getNomorSurats);
-router.get("/tapel/:id_tapel", getNomorSuratByTapel);
-router.get("/:id", getNomorSuratById);
-router.post("/", createNomorSurat);
-router.put("/:id", updateNomorSurat);
-router.delete("/:id", deleteNomorSurat);
+router.get("/", protect, getNomorSurats);
+router.get("/tapel/:id_tapel", protect, getNomorSuratByTapel);
+router.get("/:id", protect, getNomorSuratById);
+router.post("/", protect, createNomorSurat);
+router.put("/:id", protect, updateNomorSurat);
+router.delete("/:id", protect, deleteNomorSurat);
 
 module.exports = router;

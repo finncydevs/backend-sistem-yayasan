@@ -1,4 +1,4 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
 const {
   getAllTapel,
@@ -10,11 +10,11 @@ const {
 } = require("../controllers/tapelControllers");
 const { protect } = require("../middleware/auth");
 
-router.get('/aktif', getTapelAktif);
-router.get('/', getAllTapel);
-router.post('/', createTapel);
-router.get('/:id', getById)
-router.put('/:id', updateTapel);
-router.delete('/:id', deleteTapel)
+router.get("/aktif", protect, getTapelAktif);
+router.get("/", protect, getAllTapel);
+router.post("/", protect, createTapel);
+router.get("/:id", protect, getById);
+router.put("/:id", protect, updateTapel);
+router.delete("/:id", protect, deleteTapel);
 
 module.exports = router;

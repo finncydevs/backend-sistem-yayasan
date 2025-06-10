@@ -54,6 +54,12 @@ const updateLembaga = (req, res) => {
   });
 };
 
+const getLogo = (req, res) => {
+  LembagaModel.getLogo((err, results) => {
+    if (err) return res.status(500).json({ error: err.message });
+    res.json(results);
+  });
+};
 const uploadFotoLembaga = async (req, res) => {
   try {
     const id = req.params.id;
@@ -82,5 +88,6 @@ module.exports = {
   getLembagaById,
   createLembaga,
   updateLembaga,
-  uploadFotoLembaga
+  uploadFotoLembaga,
+  getLogo,
 };
