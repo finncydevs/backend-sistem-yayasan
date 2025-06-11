@@ -149,18 +149,17 @@ const getAdminById = async (req, res) => {
       return res.status(500).json({ error: "Internal server error" });
     }
 
-    if (!result || result.length === 0) {
+    if (!result) {
       return res.status(404).json({ message: "User not found" });
     }
-
-    res.json(result[0]);
+    res.json(result);
   });
 };
 
 // Update admin
 const updateAdmin = async (req, res) => {
   const { id } = req.params;
-  const { username, email, password, photo = null } = req.body;
+  const { username, email, photo = null } = req.body;
 
   if (!username) {
     return res.status(400).json({ error: "Username is required" });
@@ -168,10 +167,6 @@ const updateAdmin = async (req, res) => {
 
   try {
     const updatedData = { username, email, photo };
-
-    if (password) {
-      updatedData.password = await bcrypt.hash(password, 10);
-    }
 
     Admin.update(id, updatedData, (err, result) => {
       if (err) {
@@ -208,53 +203,80 @@ const deleteAdmin = (req, res) => {
     res.json({ message: "Admin deleted successfully" });
   });
 };
-
-// Get logged-in admin (me)
-const getMe = async (req, res) => {
-  if (!req.admin) {
-    return res.status(401).json({ message: "Not authorized" });
-  }
-
-  res.json(req.admin);
-};
-
-// Change password
 const changePassword = async (req, res) => {
   const { oldPassword, newPassword } = req.body;
-  const { id } = req.params;
+  const id = parseInt(req.admin.id); // Ensure id is an integer
+  (
+    "Request to change password for admin ID:",
+    id,
+    oldPassword,
+    newPassword
+  );
 
   if (!oldPassword || !newPassword) {
     return res.status(400).json({ error: "Old and new password are required" });
   }
 
-  Admin.getById(id, async (err, result) => {
-    if (err) {
-      console.error(err);
-      return res.status(500).json({ error: "Internal server error" });
-    }
-
-    if (!result || result.length === 0) {
-      return res.status(404).json({ error: "Admin not found" });
-    }
-
-    const admin = result[0];
-
-    const isMatch = await bcrypt.compare(oldPassword, admin.password);
-    if (!isMatch) {
-      return res.status(401).json({ error: "Old password is incorrect" });
-    }
-
-    const hashedNewPassword = await bcrypt.hash(newPassword, 10);
-
-    Admin.updatePassword(id, hashedNewPassword, (err, result) => {
+  try {
+    Admin.getById(id, async (err, result) => {
       if (err) {
-        console.error(err);
-        return res.status(500).json({ error: "Failed to update password" });
+        console.error("GetById error:", err);
+        return res.status(500).json({ error: "Internal server error" });
       }
 
-      res.json({ message: "Password updated successfully" });
+      if (!result) {
+        return res.status(404).json({ error: "Admin not found" });
+      }
+
+      const admin = result;
+
+      const isMatch = await bcrypt.compare(oldPassword, admin.password);
+
+      if (!isMatch) {
+        return res.status(401).json({ error: "Old password is incorrect" });
+      }
+
+      const hashedNewPassword = await bcrypt.hash(newPassword, 10);
+
+      Admin.updatePassword(id, hashedNewPassword, (err, updateResult) => {
+        if (err) {
+          console.error("Update password error:", err);
+          return res.status(500).json({ error: "Failed to update password" });
+        }
+        if (updateResult.affectedRows === 0) {
+          return res
+            .status(500)
+            .json({ error: "Failed to update password in database" });
+        }
+        res.json({ message: "Password updated successfully" });
+      });
     });
-  });
+  } catch (error) {
+    console.error("Change password error:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+// Get logged-in admin (me)
+const getMe = async (req, res) => {
+  if (!req.admin) {
+    return res.status(401).json({ message: "Not authorized" });
+  }
+  try {
+    const admin = await new Promise((resolve, reject) => {
+      Admin.getById(req.admin.id, (err, admin) => {
+        if (err) return reject(err);
+        resolve(admin);
+      });
+    });
+    if (!admin) {
+      return res.status(404).json({ message: "Admin not found" });
+    }
+
+    res.json(admin);
+  } catch (error) {
+    console.error("Error getting admin:", error);
+    res.status(500).json({ message: "Server error" });
+  }
 };
 
 module.exports = {

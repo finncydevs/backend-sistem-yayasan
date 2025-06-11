@@ -24,12 +24,15 @@ const uploadAdmin = upload({
 
 router.post("/login", loginAdmin);
 router.get("/me", protect, getMe);
+
 router.put("/change-password/:id", protect, changePassword);
 
 router.post("/upload/:id",protect, uploadAdmin.single("foto"), uploadFotoAdmin);
 router.get("/",protect, getAdmins);
 router.post("/", createAdmin);
+
 router.get("/:id",protect, getAdminById);
 router.put("/:id",protect, updateAdmin);
+
 
 module.exports = router;

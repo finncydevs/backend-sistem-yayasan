@@ -16,8 +16,6 @@ const PegawaiModel = {
       [filename, id],
       callback
     );
-    console.log("filename", filename);
-    console.log("id", id);
   },
   
   getPegawaiAktif: (callback) => {
