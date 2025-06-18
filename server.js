@@ -8,7 +8,7 @@ const jwt = require("jsonwebtoken");
 dotenv.config();
 
 const app = express();
-
+  
 app.use(cors());
 app.use(express.json()); // ⚠️ MUST come before routes
 app.use("/uploads", express.static("uploads"));
