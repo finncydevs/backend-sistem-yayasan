@@ -29,8 +29,8 @@ const PegawaiModel = {
       INSERT INTO pegawai (
         nama, jenjang_pendidikan, jabatan, kewarganegaraan, nik, nuptk, nip, nipy, npwp, tmp_lahir, tgl_lahir,
         jk, agama, nama_ibu, status_pernikahan, nama_suami_istri, jml_anak,
-        alamat, kecamatan, desa, kabupaten, provinsi, kode_pos, photo, status
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        alamat, kecamatan, desa, kabupaten, provinsi, kode_pos, kontak photo, status
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     `;
 
     const params = [
@@ -57,6 +57,7 @@ const PegawaiModel = {
       data.kabupaten,
       data.provinsi,
       data.kode_pos,
+      data.kontak,
       data.photo ?? null, // Jika photo tidak dikirim, set null
       data.status,
     ];
@@ -71,6 +72,7 @@ const PegawaiModel = {
         tmp_lahir = ?, tgl_lahir = ?, jk = ?, agama = ?, nama_ibu = ?, 
         status_pernikahan = ?, nama_suami_istri = ?, jml_anak = ?, alamat = ?, 
         kecamatan = ?, desa = ?, kabupaten = ?, provinsi = ?, kode_pos = ?, 
+        kontak = ?,
         photo = ?, status = ?
       WHERE id = ?
     `;
@@ -99,6 +101,7 @@ const PegawaiModel = {
       data.kabupaten,
       data.provinsi,
       data.kode_pos,
+      data.kontak,
       data.photo ?? null,
       data.status,
       id,
