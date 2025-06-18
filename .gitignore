@@ -29,4 +29,7 @@ coverage
 *.sln
 *.sw?
 
+.env*
+!.env.example
+
 *.tsbuildinfo
