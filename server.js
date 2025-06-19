@@ -1,10 +1,10 @@
 const express = require("express");
-const dotenv = require("dotenv");
 const cors = require("cors");
 const { errorHandler } = require("./middleware/errorHandler");
 const db = require("./connections/dbConn");
 const jwt = require("jsonwebtoken");
 const path = require("path");
+const dotenv = require("dotenv");
 
 dotenv.config();
 
