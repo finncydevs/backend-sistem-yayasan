@@ -24,11 +24,7 @@ app.use("/api/v1/penugasan", require("./routes/penugasanRoutes"));
 
 app.use(errorHandler);
 
-app.use(express.static(path.join(__dirname, "../frontend")));
 
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "../frontend", "index.html"));
-});
 
 const port = process.env.PORT || 3000;
 
